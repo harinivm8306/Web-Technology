@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clock + Code Comparison</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #FAEFED;
+  }
+
+  /* CLOCK SECTION */
+  #clock-section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.5s ease;
+    background: linear-gradient(120deg, #82BAC4 0%, #FAEFED 100%);
+  }
+
+  .clock-container {
+    background: linear-gradient(135deg, #006078, #82BAC4);
+    padding: 40px 80px;
+    border-radius: 20px;
+    color: #FAEFED;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: transform 0.5s ease, background 0.5s ease;
+  }
+
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.2; }
+  }
+
+  /* CONTENT SECTION */
+  #content-section {
+    padding: 80px 20px 20px 20px;
+  }
+
+  .container, .diff-table-row {
+    display: flex;
+    width: 100%;
+  }
+  .side, .diff-cell {
+    flex: 1;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  .side {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background: #FFF;
+    border-bottom: 2px solid #82BAC4;
+    min-height: 360px;
+    border-radius: 12px;
+    margin: 0 12px 30px 12px;
+    box-shadow: 0 4px 12px #E0E0E0;
+  }
+  .side h2 {
+    background-color: #006078;
+    color: #FAEFED;
+    margin: 0 0 1rem 0;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+  }
+  pre {
+    background-color: #FAEFED;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    flex-grow: 1;
+    font-size: 1rem;
+  }
+  .diff-table {
+    width: 100%;
+    background: #FFF;
+    box-shadow: 0 2px 12px #E0E0E0;
+    border-radius: 16px;
+    margin: 0 0 2rem 0;
+    overflow: hidden;
+    border: none;
+  }
+  .diff-table-header {
+    background: #E37C78;
+    color: #FAEFED;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.15rem;
+    padding: 1rem 0;
+    border-bottom: none;
+    letter-spacing: 1px;
+  }
+  .diff-table-row {
+    border-top: none;
+    background: #FFD4D1;
+  }
+  .diff-cell {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 1.2rem 1rem;
+    font-size: 1.05rem;
+    background: #FAEFED;
+    border: none;
+    position: relative;
+  }
+  .diff-table-row .diff-cell:not(:last-child)::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 14%;
+    height: 72%;
+    width: 2.5px;
+    background: #E37C78;
+    opacity: 0.35;
+    border-radius: 3px;
+    pointer-events: none;
+  }
+  .diff-cell:last-child {
+    border-right: none;
+  }
+
+  @media (max-width: 900px) {
+    .container, .diff-table-row {
+      flex-direction: column;
+    }
+    .side {
+      margin: 0 0 30px 0;
+    }
+    .diff-cell {
+      border-right: none !important;
+      border-bottom: 1px solid #FFD4D1;
+    }
+    .diff-table-row .diff-cell:not(:last-child)::after {
+      display: none;
+    }
+    .diff-table-row:last-child .diff-cell {
+      border-bottom: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- CLOCK SECTION -->
+<div id="clock-section">
+  <div class="clock-container" id="center-clock">Loading...</div>
+</div>
+
+<!-- CONTENT SECTION -->
+<div id="content-section">
+  <div class="container">
+    <div class="side" id="react-side">
+      <h2>React Code</h2>
+      <pre><code>
+import React from 'react';
+
+function App() {
+  const handleClick = () => {
+    alert('Button clicked in React!');
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={handleClick}&gt;Click Me - React&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+      </code></pre>
+    </div>
+
+    <div class="side" id="angular-side">
+      <h2>Angular Code</h2>
+      <pre><code>
+    // app.component.ts
+    import { Component } from '@angular/core';
+
+    @Component({
+      selector: 'app-root',
+      template: `&lt;button (click)="handleClick()"&gt;Click Me - Angular&lt;/button&gt;`
+    })
+    export class AppComponent {
+      handleClick() {
+        alert('Button clicked in Angular!');
+      }
+    }
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="diff-table">
+    <div class="diff-table-row diff-table-header">
+      <div class="diff-cell">React</div>
+      <div class="diff-cell">Angular</div>
+    </div>
+    <div class="diff-table-row">
+      <div class="diff-cell"><strong>Library:</strong> Component-based UI library using JSX and JavaScript.</div>
+      <div class="diff-cell"><strong>Framework:</strong> Full-featured framework using TypeScript and templates.</div>
+    </div>
+    <div class="diff-table-row">
+      <div class="diff-cell"><strong>Virtual DOM</strong> for fast rendering and updates.</div>
+      <div class="diff-cell"><strong>Real DOM</strong> with two-way data binding and dependency injection.</div>
+    </div>
+    <div class="diff-table-row">
+      <div class="diff-cell">Event handling: <code>onClick</code> prop in JSX.</div>
+      <div class="diff-cell">Event binding: <code>(click)</code> in template HTML.</div>
+    </div>
+    <div class="diff-table-row">
+      <div class="diff-cell">Flexible use with third-party libraries for routing, state, etc.</div>
+      <div class="diff-cell">All tools included: routing, HTTP, forms, built-in RxJS for state management.</div>
+    </div>
+    <div class="diff-table-row">
+      <div class="diff-cell">Backed by Facebook, large open-source ecosystem.</div>
+      <div class="diff-cell">Backed by Google, popular for enterprise-grade apps.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const clockEl = document.getElementById('center-clock');
+const clockSection = document.getElementById('clock-section');
+
+function updateClock() {
+  const now = new Date();
+  clockEl.textContent = now.toLocaleTimeString();
+
+  // Animate when a new minute starts
+  if (now.getSeconds() === 0) {
+    // Clock box scale and blink
+    clockEl.style.animation = 'blink 1s ease-in-out 2';
+    clockEl.style.transform = 'scale(1.2)';
+    setTimeout(() => clockEl.style.transform = 'scale(1)', 1200);
+
+    // Background blink black for 1s
+    clockSection.style.background = 'black';
+    setTimeout(() => {
+      clockSection.style.background = 'linear-gradient(120deg, #82BAC4 0%, #FAEFED 100%)';
+    }, 1000);
+  }
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>
